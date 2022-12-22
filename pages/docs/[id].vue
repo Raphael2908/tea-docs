@@ -6,3 +6,9 @@
         </ClientOnly>
     </section>
 </template>
+
+<script setup>
+definePageMeta({
+  pageTransition: false
+})
+</script>

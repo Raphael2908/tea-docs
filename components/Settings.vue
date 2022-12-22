@@ -1,10 +1,12 @@
 <template>
-    <section>
+    <section class="mx-auto container px-4">
         <!-- Logo -->
-        <h1 class="text-xl">{{ name }}</h1> 
+        <NuxtLink to="/">
+            <h1 class="text-xl">{{ name }}</h1> 
+        </NuxtLink>
 
         <!-- Tools -->
-        <ul class="flex gap-5 text-gray-700">
+        <ul class="flex gap-5 text-gray-700 flex-wrap">
            <li>File</li> 
            <li>Edit</li> 
            <li>View</li> 
