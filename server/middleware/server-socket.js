@@ -9,15 +9,10 @@ const io = new Server(3001, {
 
 io.on("connection", (socket) => {
   // receive a message from the client
-  socket.on("text editor inputs from client", (data) => {
+  socket.on("client-changes", (data) => {
     storeText(data)
-    setTimeout(500)
+    socket.broadcast.emit(`new-changes-${data.id}`, data.delta)
   });
-})
-
-export default defineEventHandler((event) => {
-  console.log('New request: ' + event.node.req.url)
-  return
 })
 
 const storeText = async function(data){
@@ -30,9 +25,13 @@ const storeText = async function(data){
       oldDelta: data.oldDelta
     }
   })
-
+  
   if(error){
     throw(error)
   }
 }
 
+export default defineEventHandler((event) => {
+  console.log('New request: ' + event.node.req.url)
+  return
+})

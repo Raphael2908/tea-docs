@@ -3,7 +3,6 @@
     <!-- <div class="w-full rounded-md" id="toolbar"/> -->
 
     <article class="shadow-lg w-1/2 bg-stone-100 quill-container" style="border:0"/>
-
   </section>
 </template>
 
@@ -11,6 +10,7 @@
 import Quill from 'quill'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
+import axios from 'axios'
 
 export default {
   setup(){
@@ -18,20 +18,11 @@ export default {
   },
   data() {
     return {
-      editor: null,
-      information: null
+      delta: null
     }
   },
 
-  async created(){
-    const { data } = await useFetch(`/api/documents/retrieve`, {
-      method: 'GET',
-      query: {id: this.$route.params.id}
-    })  
-    this.information = data
-  },
-
-  mounted() {
+  async mounted() {
     var toolbarOptions = [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       ['blockquote', 'code-block'],
@@ -52,7 +43,7 @@ export default {
       ['clean']                                         // remove formatting button
     ];
 
-    this.editor = new Quill('.quill-container', {
+    const editor = new Quill('.quill-container', {
         modules: {
         toolbar: toolbarOptions
       },
@@ -60,26 +51,27 @@ export default {
       theme: 'snow'
     })
     
-    const toolbar = this.editor.getModule('toolbar')
+    const toolbar = editor.getModule('toolbar')
     const toolbarElement = toolbar.container
     toolbarElement.classList.add('custom-toolbar')
 
-  
-    this.editor.on('text-change', (delta, oldDelta, source) => {
-      if(source !== 'user'){
+    const doc  = await axios.get(`/api/documents/retrieve`, {
+      params: { id: this.$route.params.id } 
+    })
+
+    editor.setContents(doc.data.oldDelta)
+    editor.updateContents(doc.data.delta)
+    editor.on('text-change', (delta, oldDelta, source) => {
+      if(source !== 'user'){ // If not by user do not store in database
         return 
       }
-      this.$socket.timeout(5000).emit("text editor inputs from client", {delta: delta, oldDelta:oldDelta, id:this.$route.params.id});
+      this.$socket.emit("client-changes", {delta: delta, oldDelta: oldDelta, id: this.$route.params.id});
+    })
+
+    this.$socket.on(`new-changes-${this.$route.params.id}`, (delta) => {
+      editor.updateContents(delta)
     })
   },
-  watch:{
-    information(value, oldValue){
-      if(value != null){
-        // const composed = Quill.Delta.compose(JSON.parse(value[0].information).oldDelta, JSON.parse(value[0].information).delta)
-        this.editor.setContents(JSON.parse(value[0].information).oldDelta)
-      }
-    }
-  }
 }
 </script>
 
