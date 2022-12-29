@@ -9,6 +9,7 @@ export default defineNuxtConfig({
         // apiSecret: '123',
         supabaseURL: process.env.SUPABASE_URL,
         supabaseKey: process.env.SUPABASE_KEY,
+        host: process.env.HOST,
         // Keys within public, will be also exposed to the client-side
         public: {
         //   apiBase: '/api'
