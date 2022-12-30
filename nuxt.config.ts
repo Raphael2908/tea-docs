@@ -16,6 +16,13 @@ export default defineNuxtConfig({
         }
     },
     app: {
+        head:{
+            meta: [
+                // <meta name="description" content="My amazing site">
+                // { name: 'description', content: 'My amazing site.' },
+                {'http-equiv': "Content-Security-Policy",  'content': "upgrade-insecure-requests"}
+            ],
+        },
         pageTransition: { name: 'page', mode: 'out-in' }
     },
     
