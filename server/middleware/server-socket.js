@@ -1,9 +1,18 @@
 import { Server } from "socket.io";
 import { supabase } from "../database/client";
+import { createServer } from "http";
+const httpServer = createServer();
 
-const io = new Server(8080, {
+// const io = new Server(8080, {
+//   cors: {
+//       origin: '*',
+//   }
+// });
+
+const io = new Server(httpServer, {
+  path: "/tea-path/",
   cors: {
-      origin: '*',
+          origin: '*',
   }
 });
 
