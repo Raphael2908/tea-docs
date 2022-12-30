@@ -10,11 +10,12 @@ const httpServer = createServer();
 // });
 
 const io = new Server(httpServer, {
-  path: "/tea-path/",
   cors: {
           origin: '*',
   }
 });
+
+httpServer.listen(8080);
 
 io.on("connection", (socket) => {
   // receive a message from the client
