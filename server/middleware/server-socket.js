@@ -1,21 +1,11 @@
 import { Server } from "socket.io";
 import { supabase } from "../database/client";
-import { createServer } from "http";
-const httpServer = createServer();
 
-// const io = new Server(8080, {
-//   cors: {
-//       origin: '*',
-//   }
-// });
-
-const io = new Server(httpServer, {
+const io = new Server(8080, {
   cors: {
-          origin: '*',
+      origin: '*',
   }
 });
-
-httpServer.listen(8080);
 
 io.on("connection", (socket) => {
   // receive a message from the client
