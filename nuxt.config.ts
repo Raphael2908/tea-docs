@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     serverHandlers: [
         {
             route: '/ws',
-            handler: '~/server-middleware/server-socket'
+            handler: 'server/middleware/server-socket.js'
         }
     ]
     
