@@ -1,6 +1,6 @@
-# Nuxt 3 Minimal Starter
+# A clone of google docs 
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Found here on tea-docs.zenr.ninja
 
 ## Setup
 
@@ -26,6 +26,10 @@ npm run dev
 ```
 
 ## Production
+
+Currently it does not work on production
+
+Check out the localhost version: https://github.com/Raphael2908/tea-docs/tree/localhost
 
 Build the application for production:
 
