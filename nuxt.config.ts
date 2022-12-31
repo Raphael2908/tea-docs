@@ -25,5 +25,11 @@ export default defineNuxtConfig({
         },
         pageTransition: { name: 'page', mode: 'out-in' }
     },
+    serverHandlers: [
+        {
+            route: '/ws',
+            handler: '~/server-middleware/server-socket'
+        }
+    ]
     
 })

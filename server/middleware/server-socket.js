@@ -1,11 +1,7 @@
 import { Server } from "socket.io";
 import { supabase } from "../database/client";
-import http from 'http'
 
-
-const newServer = http.createServer().listen(8080);
-
-const io = new Server(newServer, {
+const io = new Server(3001, {
   cors: {
       origin: '*',
   }
