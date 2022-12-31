@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client'
 
-const socketIO = io('https://tea-docs.zenr.ninja:3001');
+const socketIO = io('ws://localhost:3001');
 
 export default defineNuxtPlugin( () => {
 
