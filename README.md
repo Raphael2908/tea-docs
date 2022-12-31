@@ -1,6 +1,6 @@
 # A clone of google docs 
 
-Found here on tea-docs.zenr.ninja
+Found here on https://tea-docs.zenr.ninja
 
 ## Setup
 
