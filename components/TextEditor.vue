@@ -80,6 +80,7 @@ export default {
       editor.updateContents(payload.payload.delta)
     }).subscribe((status) => {
       if(status === 'SUBSCRIBED'){
+        //
       }
     })
 
@@ -94,5 +95,7 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 </style>
