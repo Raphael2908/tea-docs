@@ -61,15 +61,31 @@ export default {
 
     editor.setContents(doc.data.oldDelta)
     editor.updateContents(doc.data.delta)
+    const channel = this.$base.channel('room1')
+
+    channel.subscribe((status) => {
+    if (status === 'SUBSCRIBED') {
+      console.log('You are connected G')
+    }
+
     editor.on('text-change', (delta, oldDelta, source) => {
       if(source !== 'user'){ // If not by user do not store in database
         return 
       }
-      this.$socket.emit("client-changes", {delta: delta, oldDelta: oldDelta, id: this.$route.params.id});
+      console.log('changing text')
+      channel.send({
+        type: 'broadcast',
+        event: 'text-change',
+        payload: {delta: delta, oldDelta: oldDelta, id: this.$route.params.id}
+      })
     })
 
-    this.$socket.on(`new-changes-${this.$route.params.id}`, (delta) => {
-      editor.updateContents(delta)
+    })
+
+    // this.$socket.on(`new-changes-${this.$route.params.id}`, (delta) => {
+      // })
+    channel.on('broadcast', {event: 'text-change'}, (payload) => {
+      editor.updateContents(payload.payload.delta)
     })
   },
 }

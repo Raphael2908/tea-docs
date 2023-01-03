@@ -1,21 +1,17 @@
-import { Server } from "socket.io";
 import { supabase } from "../database/client";
 
-const io = new Server(3001, {
-  cors: {
-      origin: '*',
+const channel = supabase.channel('room1')
+channel.subscribe((status) => {
+  if (status === 'SUBSCRIBED') {
+    // now you can start broadcasting cursor positions
+    console.log('The Server got you')
   }
-});
-
-io.on("connection", (socket) => {
-  // receive a message from the client
-  console.log('connection established')
-
-  socket.on("client-changes", (data) => {
-    storeText(data)
-    socket.broadcast.emit(`new-changes-${data.id}`, data.delta)
-  });
 })
+
+channel.on('broadcast', {event: 'text-change'}, (payload) => {
+  storeText(payload.payload)
+})
+
 
 const storeText = async function(data){
   const { error } = await supabase
