@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { ChevronDownIcon } from '@heroicons/vue/24/solid'
+import { ChevronDownIcon } from '@heroicons/vue/24/solid/index.js'
 export default {
     async setup() {
         // const documents = useFetch('/api/documents/index')
